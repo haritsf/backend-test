@@ -3,13 +3,11 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use Illuminate\Foundation\Auth\AuthenticatesUsers;
 use App\User;
-
+use Hash;
 class LoginController extends Controller
 {
-    use AuthenticatesUsers;
-    protected $redirectTo = '/article/list';
+    
     public function view()
     {
         return view('login');
@@ -17,15 +15,16 @@ class LoginController extends Controller
 
     public function login(Request $request)
     {
-        $userdata = [
-            'email' => $request->email,
-            'password' => $request->password
-        ];
+        $data = User::where('email', $request->email)->first();
 
-        if (User::where('email', $userdata['email'])->first()->password === $userdata['password']) {
-            return true;
+        if ($data != NULL) {
+            if ($data->email == $request->email && Hash::check($request->password, $data->password)) {
+                return redirect()->route('article.index');
+            } else {
+                return redirect()->route('login');
+            }
         } else {
-            return redirect('login');
+            dd('Null Data');
         }
     }
 }

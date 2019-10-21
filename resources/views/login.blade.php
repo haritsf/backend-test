@@ -17,11 +17,11 @@
 
         <form action="/login" method="POST">
             @csrf
-            <input type="text" name="email" class="form-control" placeholder="email" />
+            <input type="text" name="email" class="form-control" placeholder="email" autofocus />
             <br>
             <input type="password" name="password" class="form-control" placeholder="password" />
             <br><br>
-            <input type="submit" class="btn btn-primary" value="Submit" />
+            <input type="submit" class="btn btn-primary" value="submit" />
         </form>
     </div>
 </body>
